@@ -1,4 +1,14 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import type CanvasComponent from '$lib/Canvas.svelte';
+
+	let Canvas: typeof CanvasComponent;
+
+	onMount(async () => {
+		Canvas = (await import('$lib/Canvas.svelte')).default;
+	});
+</script>
+
 <section class="flex flex-col items-center justify-center h-full">
-	<h1>Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+	<svelte:component this={Canvas} bgUrl={'https://konvajs.org/assets/yoda.jpg'} />
 </section>

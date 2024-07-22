@@ -8,6 +8,9 @@ devDependencies:
   '@playwright/test':
     specifier: ^1.45.2
     version: 1.45.2
+  '@svelte-put/resize':
+    specifier: ^3.1.0
+    version: 3.1.0(svelte@5.0.0-next.193)
   '@sveltejs/adapter-auto':
     specifier: ^3.2.2
     version: 3.2.2(@sveltejs/kit@2.5.18)
@@ -41,6 +44,9 @@ devDependencies:
   globals:
     specifier: ^15.8.0
     version: 15.8.0
+  konva:
+    specifier: ^9.3.14
+    version: 9.3.14
   postcss:
     specifier: ^8.4.39
     version: 8.4.39
@@ -59,6 +65,9 @@ devDependencies:
   svelte-check:
     specifier: ^3.8.4
     version: 3.8.4(postcss@8.4.39)(svelte@5.0.0-next.193)
+  svelte-konva:
+    specifier: ^0.3.1
+    version: 0.3.1(konva@9.3.14)(svelte@5.0.0-next.193)
   tailwindcss:
     specifier: ^3.4.6
     version: 3.4.6
@@ -582,6 +591,14 @@ packages:
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+    dev: true
+
+  /@svelte-put/resize@3.1.0(svelte@5.0.0-next.193):
+    resolution: {integrity: sha512-w8xC2MePFFI8TtEUX28cWndmkH4QQfd4eAgqinN1+aoXQSqdhCa+i0C1HSJNZEDM7VOICVClPlzU+e96BWS0Lw==}
+    peerDependencies:
+      svelte: ^3.55.0 || ^4.0.0 || ^5.0.0
+    dependencies:
+      svelte: 5.0.0-next.193
     dev: true
 
   /@sveltejs/adapter-auto@3.2.2(@sveltejs/kit@2.5.18):
@@ -1809,6 +1826,10 @@ packages:
     resolution: {integrity: sha512-tBECoUqNFbyAY4RrbqsBQqDFpGXAEbdD5QKr8kACx3+rnArmuuR22nKQWKazvp07N9yjTyDZaw/20UIH8tL9DQ==}
     dev: true
 
+  /konva@9.3.14:
+    resolution: {integrity: sha512-Gmm5lyikGYJyogKQA7Fy6dKkfNh350V6DwfZkid0RVrGYP2cfCsxuMxgF5etKeCv7NjXYpJxKqi1dYkIkX/dcA==}
+    dev: true
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -2648,6 +2669,16 @@ packages:
     peerDependencies:
       svelte: ^3.19.0 || ^4.0.0
     dependencies:
+      svelte: 5.0.0-next.193
+    dev: true
+
+  /svelte-konva@0.3.1(konva@9.3.14)(svelte@5.0.0-next.193):
+    resolution: {integrity: sha512-nbQ7S3NhtgrwcEMXS1LSYLbF21BZ6iHN6yvgrYUUnmFdXsSXmAN+I1/Ip7qQ6MQxVTTcSO5lGpGxEuwRg2q3hw==}
+    peerDependencies:
+      konva: 8 - 9
+      svelte: 3 - 4
+    dependencies:
+      konva: 9.3.14
       svelte: 5.0.0-next.193
     dev: true
 
