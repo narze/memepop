@@ -10,5 +10,9 @@
 </script>
 
 <section class="flex flex-col items-center justify-center h-full">
-	<svelte:component this={Canvas} bgUrl={'https://konvajs.org/assets/yoda.jpg'} />
+	<svelte:component
+		this={Canvas}
+		bgUrl={'https://konvajs.org/assets/yoda.jpg'}
+		text={'Meme, I embrace.'}
+	/>
 </section>

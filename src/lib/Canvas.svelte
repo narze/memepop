@@ -5,7 +5,10 @@
 	import { resize } from '@svelte-put/resize';
 	import type { ResizeDetail } from '@svelte-put/resize';
 
+	import EditableText from './EditableText.svelte';
+
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
+	export let text = 'Text';
 
 	let image: HTMLImageElement;
 	let container: HTMLDivElement;
@@ -53,6 +56,7 @@
 	<Stage config={{ width, height }}>
 		<Layer>
 			<Image config={{ image, width, height }} />
+			<EditableText {text} />
 		</Layer>
 	</Stage>
 </div>
