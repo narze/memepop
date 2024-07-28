@@ -19,13 +19,15 @@
 	let imgWidth = 1;
 	let imgHeight = 1;
 
+	const maxWidth = 640;
+
 	function onResized(e?: CustomEvent<ResizeDetail>) {
 		if (e) {
 			const { entry } = e.detail;
 			width = entry.contentRect.width;
 			height = width * (imgHeight / imgWidth);
 		} else {
-			width = window.innerWidth - 16;
+			width = Math.min(maxWidth, window.innerWidth - 16);
 			height = width * (imgHeight / imgWidth);
 		}
 	}
@@ -48,7 +50,8 @@
 </script>
 
 <div
-	class="container max-w-screen-sm min-w-80"
+	class={`container min-w-80`}
+	style={`max-width: ${maxWidth}px;`}
 	bind:this={container}
 	use:resize
 	on:resized={onResized}
