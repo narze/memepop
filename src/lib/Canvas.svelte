@@ -19,12 +19,14 @@
 	let imgScaleToFit: number;
 	let canvasScale: number;
 	let maxWidth: number;
+	let ready = false;
 
 	const minWidth = 320;
 
 	$: if (image) {
 		imgWidth = image.width;
 		imgHeight = image.height;
+		ready = true;
 	}
 
 	$: if (width && imgWidth) {
@@ -77,7 +79,9 @@
 			<Image config={{ image }} />
 		</Layer>
 		<Layer config={{ scaleX: canvasScale, scaleY: canvasScale }}>
-			<EditableText {text} />
+			{#if ready}
+				<EditableText {text} fontSize={96} xPercent={50} yPercent={90} />
+			{/if}
 		</Layer>
 	</Stage>
 </div>

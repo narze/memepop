@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Konva from 'konva';
+	import { onMount } from 'svelte';
 	import {
 		Text,
 		Transformer,
@@ -9,23 +10,21 @@
 	} from 'svelte-konva';
 
 	export let text = 'Hello';
+	export let xPercent = 50;
+	export let yPercent = 90;
+	export let fontSize = 48;
 
 	let textEl: Konva.Text;
 
 	$: textConfig = {
 		text,
-		fontSize: 24,
+		fontSize,
 		fill: 'white',
-		x: 10,
-		y: 10,
-		width: 300,
-		height: 100,
 		align: 'center',
 		verticalAlign: 'middle',
 		draggable: true,
 		name: 'text1',
 		origin: 'center'
-		// scale: { x: 1.0 / scale, y: 1.0 / scale }
 	};
 
 	let transformer: Konva.Transformer;
@@ -227,6 +226,15 @@
 		// 	scaleY: 1
 		// });
 	}
+
+	onMount(async () => {
+		textEl.offsetX(textEl.width() / 2);
+		textEl.offsetY(textEl.height() / 2);
+
+		const parent = textEl.getParent()!;
+		textEl.x(parent.width() * xPercent * 0.01);
+		textEl.y(parent.height() * yPercent * 0.01);
+	});
 </script>
 
 <Transformer
