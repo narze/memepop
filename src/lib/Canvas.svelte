@@ -2,9 +2,6 @@
 	import { onMount } from 'svelte';
 	import { Stage, Layer, Image } from 'svelte-konva';
 
-	import { resize } from '@svelte-put/resize';
-	import type { ResizeDetail } from '@svelte-put/resize';
-
 	import EditableText from './EditableText.svelte';
 
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
@@ -13,33 +10,49 @@
 	let image: HTMLImageElement;
 	let container: HTMLDivElement;
 
-	let width = 100.0;
-	let height = 100.0;
+	let width: number;
+	let height: number;
 
-	let imgWidth = 1;
-	let imgHeight = 1;
+	let imgWidth: number;
+	let imgHeight: number;
 
-	const maxWidth = 640;
+	let imgScaleToFit: number;
+	let canvasScale: number;
+	let maxWidth: number;
 
-	function onResized(e?: CustomEvent<ResizeDetail>) {
-		if (e) {
-			const { entry } = e.detail;
-			width = entry.contentRect.width;
-			height = width * (imgHeight / imgWidth);
-		} else {
-			width = Math.min(maxWidth, window.innerWidth - 16);
-			height = width * (imgHeight / imgWidth);
-		}
+	const minWidth = 320;
+
+	$: if (image) {
+		imgWidth = image.width;
+		imgHeight = image.height;
+	}
+
+	$: if (width && imgWidth) {
+		imgScaleToFit = width / imgWidth;
+	}
+
+	$: if (width && maxWidth && imgHeight && imgWidth) {
+		height = width * (imgHeight / imgWidth);
+
+		canvasScale = width / maxWidth;
+	}
+
+	$: if (container) {
+		const maxWidthPx = getComputedStyle(container).maxWidth;
+		maxWidth = parseInt(maxWidthPx.replace('px', ''));
+	}
+
+	function onResized() {
+		width = window.innerWidth - (container?.offsetLeft ?? 16) * 2;
+		// clamp width between min and max
+		width = Math.min(maxWidth, Math.max(minWidth, width));
+		height = width * (imgHeight / imgWidth);
 	}
 
 	onMount(() => {
 		const img = document.createElement('img');
 		img.src = bgUrl;
-		img.onload = () => {
-			image = img;
-			imgWidth = img.width;
-			imgHeight = img.height;
-		};
+		img.onload = () => (image = img);
 
 		window.addEventListener('resize', () => onResized());
 
@@ -50,15 +63,20 @@
 </script>
 
 <div
-	class={`container min-w-80`}
-	style={`max-width: ${maxWidth}px;`}
+	class="container max-w-screen-lg mx-auto"
 	bind:this={container}
-	use:resize
-	on:resized={onResized}
+	bind:clientWidth={width}
+	bind:clientHeight={height}
 >
-	<Stage config={{ width, height }}>
-		<Layer>
-			<Image config={{ image, width, height }} />
+	<Stage
+		config={{ width, height }}
+		class="flex justify-center"
+		style={`background-color: transparent;`}
+	>
+		<Layer config={{ scaleX: imgScaleToFit, scaleY: imgScaleToFit }}>
+			<Image config={{ image }} />
+		</Layer>
+		<Layer config={{ scaleX: canvasScale, scaleY: canvasScale }}>
 			<EditableText {text} />
 		</Layer>
 	</Stage>

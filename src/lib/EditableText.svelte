@@ -10,34 +10,23 @@
 
 	export let text = 'Hello';
 
-	const texts = [
-		{
-			text,
-			fontSize: 24,
-			fill: 'white',
-			// x: 10,
-			// y: 10,
-			width: 400,
-			height: 30,
-			align: 'center',
-			verticalAlign: 'bottom',
-			draggable: true,
-			name: 'text1'
-		}
-		// {
-		// 	text: 'Hello',
-		// 	rotation: 0,
-		// 	x: 150,
-		// 	y: 150,
-		// 	// width: 100,
-		// 	// height: 100,
-		// 	scaleX: 1,
-		// 	scaleY: 1,
-		// 	fill: 'green',
-		// 	name: 'text2',
-		// 	draggable: true
-		// }
-	];
+	let textEl: Konva.Text;
+
+	$: textConfig = {
+		text,
+		fontSize: 24,
+		fill: 'white',
+		x: 10,
+		y: 10,
+		width: 300,
+		height: 100,
+		align: 'center',
+		verticalAlign: 'middle',
+		draggable: true,
+		name: 'text1',
+		origin: 'center'
+		// scale: { x: 1.0 / scale, y: 1.0 / scale }
+	};
 
 	let transformer: Konva.Transformer;
 	let selectedShapeName = '';
@@ -59,8 +48,9 @@
 
 		// find clicked text by its name
 		const name = konvaEvent.target.name();
-		const text = texts.find((r) => r.name === name);
-		if (text) {
+		// const text = texts.find((r) => r.name === name);
+
+		if (textConfig) {
 			selectedShapeName = name;
 		} else {
 			selectedShapeName = '';
@@ -246,14 +236,13 @@
 	}}
 />
 
-{#each texts as text}
-	<Text
-		config={text}
-		on:transform={handleTransform}
-		on:transformend={handleTransformEnd}
-		on:mousedown={handleStageMouseDown}
-		on:touchstart={handleStageMouseDown}
-		on:dblclick={handleDblClick}
-		on:dbltap={handleDblClick}
-	/>
-{/each}
+<Text
+	bind:handle={textEl}
+	config={textConfig}
+	on:transform={handleTransform}
+	on:transformend={handleTransformEnd}
+	on:mousedown={handleStageMouseDown}
+	on:touchstart={handleStageMouseDown}
+	on:dblclick={handleDblClick}
+	on:dbltap={handleDblClick}
+/>
