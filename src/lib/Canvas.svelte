@@ -36,6 +36,12 @@
 	$: if (width && maxWidth && imgHeight && imgWidth) {
 		height = width * (imgHeight / imgWidth);
 
+		// if height is more than 70%, scale down
+		if (height > window.innerHeight * 0.7) {
+			height = window.innerHeight * 0.7;
+			width = height * (imgWidth / imgHeight);
+		}
+
 		canvasScale = width / maxWidth;
 	}
 
@@ -65,7 +71,7 @@
 </script>
 
 <div
-	class="container max-w-screen-lg mx-auto"
+	class="container mx-auto max-w-screen-lg"
 	bind:this={container}
 	bind:clientWidth={width}
 	bind:clientHeight={height}
