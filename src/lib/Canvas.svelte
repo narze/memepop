@@ -11,7 +11,11 @@
 	export function saveImage() {
 		editableText.hideTransformer();
 
-		const dataURL = stage.toDataURL({ pixelRatio: 1 });
+		const dataURL = stage.toDataURL({
+			pixelRatio: window.devicePixelRatio,
+			mimeType: 'image/jpeg',
+			quality: 1
+		});
 
 		return dataURL;
 	}
