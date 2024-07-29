@@ -14,6 +14,10 @@
 	export let yPercent = 90;
 	export let fontSize = 48;
 
+	export function hideTransformer() {
+		transformer.nodes([]);
+	}
+
 	let textEl: Konva.Text;
 
 	$: textConfig = {

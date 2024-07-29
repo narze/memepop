@@ -25,13 +25,13 @@
 	<button on:click={generateImage} class="btn">Save</button>
 
 	<dialog class="modal" bind:this={imageModal}>
-		<div class="modal-box">
-			<p>Generated image</p>
+		<div class="modal-box space-y-4">
+			<p class="text-center">Generated image</p>
 			<h3 class="text-lg font-bold">
 				<img src={imgDataURL} alt="" />
 			</h3>
 			<form method="dialog" class="modal-form">
-				<div class="mt-4 flex justify-center">
+				<div class="flex justify-center">
 					<button class="btn">Close</button>
 				</div>
 			</form>

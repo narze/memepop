@@ -9,6 +9,8 @@
 	export let text = 'Text';
 
 	export function saveImage() {
+		editableText.hideTransformer();
+
 		const dataURL = stage.toDataURL({ pixelRatio: 1 });
 
 		return dataURL;
@@ -17,6 +19,7 @@
 	let stage: Konva.Stage;
 	let image: HTMLImageElement;
 	let container: HTMLDivElement;
+	let editableText: EditableText;
 
 	let width: number;
 	let height: number;
@@ -95,7 +98,7 @@
 		</Layer>
 		<Layer config={{ scaleX: canvasScale, scaleY: canvasScale }}>
 			{#if ready}
-				<EditableText {text} fontSize={96} xPercent={50} yPercent={90} />
+				<EditableText bind:this={editableText} {text} fontSize={96} xPercent={50} yPercent={90} />
 			{/if}
 		</Layer>
 	</Stage>
