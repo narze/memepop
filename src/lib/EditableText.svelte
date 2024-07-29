@@ -18,6 +18,10 @@
 		transformer.nodes([]);
 	}
 
+	export function showTransformer() {
+		transformer.nodes([textEl]);
+	}
+
 	let textEl: Konva.Text;
 
 	$: textConfig = {
@@ -251,6 +255,8 @@
 		const parent = textEl.getParent()!;
 		textEl.x((parent.width() * xPercent * 0.01) / parent.scaleX());
 		textEl.y((parent.height() * yPercent * 0.01) / parent.scaleY());
+
+		showTransformer();
 	});
 </script>
 

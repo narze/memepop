@@ -17,6 +17,8 @@
 			quality: 1
 		});
 
+		editableText.showTransformer();
+
 		return dataURL;
 	}
 
