@@ -3,10 +3,18 @@
 	import { Stage, Layer, Image } from 'svelte-konva';
 
 	import EditableText from './EditableText.svelte';
+	import Konva from 'konva';
 
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
 	export let text = 'Text';
 
+	export function saveImage() {
+		const dataURL = stage.toDataURL({ pixelRatio: 1 });
+
+		return dataURL;
+	}
+
+	let stage: Konva.Stage;
 	let image: HTMLImageElement;
 	let container: HTMLDivElement;
 
@@ -77,6 +85,7 @@
 	bind:clientHeight={height}
 >
 	<Stage
+		bind:handle={stage}
 		config={{ width, height }}
 		class="flex justify-center"
 		style={`background-color: transparent;`}
