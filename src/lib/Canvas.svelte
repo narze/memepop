@@ -6,10 +6,42 @@
 	import Konva from 'konva';
 
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
-	export let text = 'Text';
+
+	type Text = {
+		text: string;
+		xPercent: number;
+		yPercent: number;
+		fontSize: number;
+		editable: boolean;
+		color: string;
+		el?: EditableText;
+	};
+
+	let textArray: Text[] = [
+		{
+			text: 'Meme, I embrace.',
+			xPercent: 50,
+			yPercent: 90,
+			fontSize: 96,
+			editable: true,
+			color: 'white',
+			el: undefined
+		},
+		{
+			text: 'memepop.vercel.app',
+			xPercent: 85,
+			yPercent: 98.5,
+			fontSize: 32,
+			editable: false,
+			color: 'black',
+			el: undefined
+		}
+	];
 
 	export function saveImage() {
-		editableText.hideTransformer();
+		textArray.forEach((text) => {
+			text.el?.hideTransformer();
+		});
 
 		const dataURL = stage.toDataURL({
 			pixelRatio: window.devicePixelRatio,
@@ -17,7 +49,9 @@
 			quality: 1
 		});
 
-		editableText.showTransformer();
+		textArray.forEach((text) => {
+			text.el?.showTransformer();
+		});
 
 		return dataURL;
 	}
@@ -25,7 +59,6 @@
 	let stage: Konva.Stage;
 	let image: HTMLImageElement;
 	let container: HTMLDivElement;
-	let editableText: EditableText;
 
 	let width: number;
 	let height: number;
@@ -104,7 +137,17 @@
 		</Layer>
 		<Layer config={{ scaleX: canvasScale, scaleY: canvasScale }}>
 			{#if ready}
-				<EditableText bind:this={editableText} {text} fontSize={96} xPercent={50} yPercent={90} />
+				{#each textArray as text}
+					<EditableText
+						bind:this={text.el}
+						text={text.text}
+						fontSize={text.fontSize}
+						xPercent={text.xPercent}
+						yPercent={text.yPercent}
+						color={text.color}
+						editable={text.editable}
+					/>
+				{/each}
 			{/if}
 		</Layer>
 	</Stage>

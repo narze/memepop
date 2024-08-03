@@ -13,12 +13,18 @@
 	export let xPercent = 50;
 	export let yPercent = 90;
 	export let fontSize = 48;
+	export let editable = true;
+	export let color = 'white';
 
 	export function hideTransformer() {
+		if (!editable) return;
+
 		transformer.nodes([]);
 	}
 
 	export function showTransformer() {
+		if (!editable) return;
+
 		transformer.nodes([textEl]);
 	}
 
@@ -27,11 +33,11 @@
 	$: textConfig = {
 		text,
 		fontSize,
-		fill: 'white',
+		fill: color,
 		align: 'center',
 		verticalAlign: 'middle',
-		draggable: true,
-		name: 'text1',
+		draggable: editable,
+		// name: 'text1',
 		origin: 'center'
 	};
 
@@ -39,6 +45,7 @@
 	let selectedShapeName = '';
 
 	function handleStageMouseDown(e: KonvaMouseEvent | KonvaTouchEvent) {
+		return;
 		const konvaEvent = e.detail;
 		// clicked on stage - clear selection
 		if (konvaEvent.target === konvaEvent.target.getStage()) {
@@ -231,6 +238,7 @@
 
 	// Use prompt for now
 	function handleDblClick(e: KonvaMouseEvent | KonvaTouchEvent) {
+		if (!editable) return;
 		const newText = prompt('Edit text:', text);
 
 		if (newText) {

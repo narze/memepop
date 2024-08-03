@@ -16,7 +16,6 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.3",
-		"@svelte-bin/clipboard": "^0.1.4",
 		"@svelte-put/resize": "^3.1.0",
 		"@sveltejs/adapter-auto": "^3.2.2",
 		"@sveltejs/kit": "^2.5.18",

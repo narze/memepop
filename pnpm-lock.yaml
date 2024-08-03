@@ -11,9 +11,6 @@ importers:
       '@playwright/test':
         specifier: ^1.45.3
         version: 1.45.3
-      '@svelte-bin/clipboard':
-        specifier: ^0.1.4
-        version: 0.1.4(svelte@5.0.0-next.193)
       '@svelte-put/resize':
         specifier: ^3.1.0
         version: 3.1.0(svelte@5.0.0-next.193)
@@ -416,11 +413,6 @@ packages:
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
-
-  '@svelte-bin/clipboard@0.1.4':
-    resolution: {integrity: sha512-V3OhCynFg9mcJhnI/wDM/tgTqk6UJEITvFdO+lljBy7DFu0GxMCWSWXhxF2xY1aPUmmPY5khktcY5KZ9PtKzWA==}
-    peerDependencies:
-      svelte: ^4.0.0
 
   '@svelte-put/resize@3.1.0':
     resolution: {integrity: sha512-w8xC2MePFFI8TtEUX28cWndmkH4QQfd4eAgqinN1+aoXQSqdhCa+i0C1HSJNZEDM7VOICVClPlzU+e96BWS0Lw==}
@@ -2077,10 +2069,6 @@ snapshots:
     optional: true
 
   '@sinclair/typebox@0.27.8': {}
-
-  '@svelte-bin/clipboard@0.1.4(svelte@5.0.0-next.193)':
-    dependencies:
-      svelte: 5.0.0-next.193
 
   '@svelte-put/resize@3.1.0(svelte@5.0.0-next.193)':
     dependencies:

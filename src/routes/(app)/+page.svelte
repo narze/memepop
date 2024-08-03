@@ -36,7 +36,9 @@
 	function copy() {
 		copyImageToClipboard(imgDataURL)
 			.then(() => {
-				console.log('Image Copied');
+				if (window.location.hostname === 'localhost') {
+					console.log('Image Copied');
+				}
 			})
 			.catch((e) => {
 				alert('Error: ' + e.message);
@@ -45,7 +47,7 @@
 </script>
 
 <section class="flex h-full flex-col items-center justify-center gap-4">
-	<svelte:component this={Canvas} bind:this={canvas} bgUrl={image} text={'Meme, I embrace.'} />
+	<svelte:component this={Canvas} bind:this={canvas} bgUrl={image} />
 
 	<button on:click={generateImage} class="btn">Save</button>
 
