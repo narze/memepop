@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import FileSaver from 'file-saver';
-	import InAppSpy from 'inapp-spy';
 
+	import { browser } from '$app/environment';
 	import type CanvasComponent from '$lib/Canvas.svelte';
 	import image from '$lib/image.jpg';
 	import { copyImageToClipboard } from '$lib/copy-image-clipboard';
@@ -15,8 +15,12 @@
 	let appName: string | undefined;
 
 	onMount(async () => {
-		({ isInApp, appName } = InAppSpy());
 		Canvas = (await import('$lib/Canvas.svelte')).default;
+
+		if (browser) {
+			const InAppSpy = (await import('inapp-spy')).default;
+			({ isInApp, appName } = InAppSpy());
+		}
 	});
 
 	const generateImage = () => {
