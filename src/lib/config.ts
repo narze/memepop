@@ -32,5 +32,7 @@ export const initialTextArray: Text[] = [
 ];
 
 export const config = {
-	title: 'MemePop'
+	title: 'MemePop',
+	headerText: 'MemePop',
+	footerText: 'Made with ❤️‍🔥 by @narze'
 };
