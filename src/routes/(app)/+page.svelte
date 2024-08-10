@@ -5,6 +5,7 @@
 	import { browser } from '$app/environment';
 	import type CanvasComponent from '$lib/Canvas.svelte';
 	import { copyImageToClipboard } from '$lib/copy-image-clipboard';
+	import { config } from '$lib/config';
 
 	let Canvas: typeof CanvasComponent;
 	let canvas: CanvasComponent;
@@ -69,6 +70,8 @@
 </script>
 
 <section class="flex h-full flex-col items-center justify-center gap-4">
+	<h1 class="text-3xl font-bold">{config.title}</h1>
+
 	{#if images.length === 0}
 		<p>No images found</p>
 	{:else}
