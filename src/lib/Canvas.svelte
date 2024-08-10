@@ -38,14 +38,16 @@
 		}
 	];
 
-	export function saveImage() {
+	export function saveImage(type: string) {
+		const mimeType = type === 'png' ? 'image/png' : 'image/jpeg';
+
 		textArray.forEach((text) => {
 			text.el?.hideTransformer();
 		});
 
 		const dataURL = stage.toDataURL({
 			pixelRatio: window.devicePixelRatio,
-			mimeType: 'image/jpeg',
+			mimeType,
 			quality: 1
 		});
 

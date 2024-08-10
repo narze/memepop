@@ -24,7 +24,8 @@
 	});
 
 	const generateImage = () => {
-		imgDataURL = canvas.saveImage();
+		const imageType = image.split('.').at(-1)!;
+		imgDataURL = canvas.saveImage(imageType);
 
 		imageModal.showModal();
 	};
