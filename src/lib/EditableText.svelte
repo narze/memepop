@@ -10,7 +10,7 @@
 	} from 'svelte-konva';
 
 	export let text = 'Hello';
-	export let font: string;
+	export let font: string | undefined;
 	export let xPercent = 50;
 	export let yPercent = 90;
 	export let fontSize = 48;

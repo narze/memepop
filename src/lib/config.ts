@@ -7,6 +7,7 @@ export type Text = {
 	fontSize: number;
 	editable: boolean;
 	color: string;
+	colorEditable?: boolean;
 	el?: EditableText;
 };
 
@@ -26,6 +27,7 @@ export const initialTextArray: Text[] = [
 		fontSize: 96,
 		editable: true,
 		color: 'white',
+		colorEditable: true,
 		el: undefined
 	},
 	{
@@ -54,7 +56,7 @@ export const config: Config = {
 	headerText: 'MemePop',
 	footerText: 'Made with ❤️‍🔥 by @narze',
 	overlay: {
-		blankLabel: 'เปลี่ยนสี',
+		blankLabel: 'Change Overlay Color',
 		colors: [
 			{ name: 'Original', red: 0, green: 0, blue: 0, alpha: 0 },
 			{ name: 'เขียว 1', red: 32, green: 90, blue: 65, alpha: 0.9 },

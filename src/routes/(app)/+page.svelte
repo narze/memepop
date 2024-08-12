@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import type CanvasComponent from '$lib/Canvas.svelte';
 	import { copyImageToClipboard } from '$lib/copy-image-clipboard';
-	import { config, type OverlayColor } from '$lib/config';
+	import { config, initialTextArray, type OverlayColor } from '$lib/config';
 
 	let Canvas: typeof CanvasComponent;
 	let canvas: CanvasComponent;
@@ -17,12 +17,29 @@
 	let overlay: string | undefined;
 	let overlayColor: OverlayColor;
 	let font: string | undefined;
+	let pickerRef: HTMLButtonElement;
+	let textColor = initialTextArray.filter((t) => t.colorEditable)[0]?.color || 'white';
+	let anyTextColorEditable = initialTextArray.filter((t) => t.colorEditable).length > 0;
 
 	const images = loadImages();
 	const overlays = loadOverlayImages();
 	const fonts = browser ? loadFonts() : [];
 
 	onMount(async () => {
+		if (browser) {
+			const Picker = (await import('vanilla-picker')).default;
+
+			const picker = new Picker({
+				parent: pickerRef,
+				color: textColor,
+				alpha: false
+			});
+
+			picker.onChange = (pickedColor: { hex: string }) => {
+				textColor = pickedColor.hex.substring(0, 7);
+			};
+		}
+
 		overlay = overlays.at(0);
 		font = fonts.at(0);
 
@@ -122,8 +139,13 @@
 				overlayUrl={overlay}
 				{overlayColor}
 				{font}
+				{textColor}
 			/>
 		{/key}
+	{/if}
+
+	{#if anyTextColorEditable}
+		<button bind:this={pickerRef} class="change-text-color">Change Text Color</button>
 	{/if}
 
 	{#if images.length > 1}
@@ -190,3 +212,9 @@
 		</form>
 	</dialog>
 </section>
+
+<style lang="postcss">
+	.change-text-color {
+		@apply select-bordered flex h-12 w-full max-w-xs items-center justify-start rounded-lg border p-4 hover:border-primary focus:border-primary focus:outline-none;
+	}
+</style>

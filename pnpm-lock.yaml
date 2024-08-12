@@ -92,6 +92,9 @@ importers:
       typescript-eslint:
         specifier: 8.0.0-alpha.49
         version: 8.0.0-alpha.49(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)
+      vanilla-picker:
+        specifier: ^2.12.3
+        version: 2.12.3
       vite:
         specifier: ^5.4.0
         version: 5.4.0
@@ -413,6 +416,9 @@ packages:
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+
+  '@sphinxxxx/color-conversion@2.2.2':
+    resolution: {integrity: sha512-XExJS3cLqgrmNBIP3bBw6+1oQ1ksGjFh0+oClDKFYpCCqx/hlqwWO5KO/S63fzUo67SxI9dMrF0y5T/Ey7h8Zw==}
 
   '@svelte-put/resize@3.1.0':
     resolution: {integrity: sha512-w8xC2MePFFI8TtEUX28cWndmkH4QQfd4eAgqinN1+aoXQSqdhCa+i0C1HSJNZEDM7VOICVClPlzU+e96BWS0Lw==}
@@ -1751,6 +1757,9 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  vanilla-picker@2.12.3:
+    resolution: {integrity: sha512-qVkT1E7yMbUsB2mmJNFmaXMWE2hF8ffqzMMwe9zdAikd8u2VfnsVY2HQcOUi2F38bgbxzlJBEdS1UUhOXdF9GQ==}
+
   vite-node@1.6.0:
     resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -2080,6 +2089,8 @@ snapshots:
     optional: true
 
   '@sinclair/typebox@0.27.8': {}
+
+  '@sphinxxxx/color-conversion@2.2.2': {}
 
   '@svelte-put/resize@3.1.0(svelte@5.0.0-next.193)':
     dependencies:
@@ -3395,6 +3406,10 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
+
+  vanilla-picker@2.12.3:
+    dependencies:
+      '@sphinxxxx/color-conversion': 2.2.2
 
   vite-node@1.6.0:
     dependencies:

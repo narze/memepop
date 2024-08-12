@@ -1,15 +1,16 @@
 <script lang="ts">
+	import Konva from 'konva';
 	import { onMount, tick } from 'svelte';
 	import { Stage, Layer, Image } from 'svelte-konva';
 
 	import EditableText from './EditableText.svelte';
-	import Konva from 'konva';
 	import { initialTextArray, type OverlayColor } from './config';
 
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
 	export let overlayUrl: string | undefined;
 	export let overlayColor: OverlayColor;
 	export let font: string | undefined;
+	export let textColor: string;
 
 	let textArray = initialTextArray;
 
@@ -148,7 +149,7 @@
 						{font}
 						xPercent={text.xPercent}
 						yPercent={text.yPercent}
-						color={text.color}
+						color={text.colorEditable ? textColor : text.color}
 						editable={text.editable}
 					/>
 				{/each}
