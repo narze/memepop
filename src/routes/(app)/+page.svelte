@@ -32,6 +32,7 @@
 			const picker = new Picker({
 				parent: pickerRef,
 				color: textColor,
+				popup: 'bottom',
 				alpha: false
 			});
 
