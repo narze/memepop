@@ -9,6 +9,7 @@
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
 	export let overlayUrl: string | undefined;
 	export let overlayColor: OverlayColor;
+	export let font: string | undefined;
 
 	let textArray = initialTextArray;
 
@@ -144,6 +145,7 @@
 						bind:this={text.el}
 						text={text.text}
 						fontSize={text.fontSize}
+						{font}
 						xPercent={text.xPercent}
 						yPercent={text.yPercent}
 						color={text.color}

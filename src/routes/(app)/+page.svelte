@@ -16,12 +16,16 @@
 	let image: string;
 	let overlay: string | undefined;
 	let overlayColor: OverlayColor;
+	let font: string | undefined;
 
 	const images = loadImages();
 	const overlays = loadOverlayImages();
+	const fonts = browser ? loadFonts() : [];
 
 	onMount(async () => {
 		overlay = overlays.at(0);
+		font = fonts.at(0);
+
 		Canvas = (await import('$lib/Canvas.svelte')).default;
 
 		if (browser) {
@@ -48,6 +52,27 @@
 		)
 			.map((m) => m.default)
 			.filter((p) => !p.split('/').at(-1)?.startsWith('_'));
+	}
+
+	function loadFonts() {
+		const fontFiles = Object.values(
+			import.meta.glob<{ default: string }>('$lib/fonts/*.{ttf,otf,woff,woff2}', { eager: true })
+		)
+			.map((m) => m.default)
+			.filter((p) => !p.split('/').at(-1)?.startsWith('_'));
+
+		return fontFiles
+			.map((fontFile) => {
+				const fontName = fontFile.split('/').at(-1)?.split('.').at(0);
+				if (fontName) {
+					const font = new FontFace(fontName, `url(${fontFile})`);
+					font.load().then((loadedFont) => {
+						document.fonts.add(loadedFont);
+					});
+				}
+				return fontName;
+			})
+			.filter(Boolean) as string[];
 	}
 
 	function saveImage() {
@@ -83,19 +108,20 @@
 	}
 </script>
 
-<section class="flex h-full flex-col items-center justify-center gap-4">
+<section class="flex h-full flex-col items-center justify-center gap-4" style:font-family={font}>
 	<h1 class="text-3xl font-bold">{config.title}</h1>
 
 	{#if images.length === 0}
 		<p>No images found</p>
 	{:else}
-		{#key image + overlay}
+		{#key image}
 			<svelte:component
 				this={Canvas}
 				bind:this={canvas}
 				bgUrl={image}
 				overlayUrl={overlay}
 				{overlayColor}
+				{font}
 			/>
 		{/key}
 	{/if}
@@ -112,6 +138,14 @@
 		<select class="select select-bordered w-full max-w-xs" bind:value={overlay}>
 			{#each overlays as path}
 				<option value={path}>{humanizeString(path.split('/').at(-1)!.split('.').at(0)!)}</option>
+			{/each}
+		</select>
+	{/if}
+
+	{#if fonts.length > 1}
+		<select class="select select-bordered w-full max-w-xs" bind:value={font}>
+			{#each fonts as fontName}
+				<option value={fontName}>{humanizeString(fontName.split('-').at(0)!)}</option>
 			{/each}
 		</select>
 	{/if}
