@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import type CanvasComponent from '$lib/Canvas.svelte';
 	import { copyImageToClipboard } from '$lib/copy-image-clipboard';
-	import { config } from '$lib/config';
+	import { config, type OverlayColor } from '$lib/config';
 
 	let Canvas: typeof CanvasComponent;
 	let canvas: CanvasComponent;
@@ -14,10 +14,14 @@
 	let isInApp: boolean;
 	let appName: string | undefined;
 	let image: string;
+	let overlay: string | undefined;
+	let overlayColor: OverlayColor;
 
 	const images = loadImages();
+	const overlays = loadOverlayImages();
 
 	onMount(async () => {
+		overlay = overlays.at(0);
 		Canvas = (await import('$lib/Canvas.svelte')).default;
 
 		if (browser) {
@@ -31,6 +35,16 @@
 	function loadImages() {
 		return Object.values(
 			import.meta.glob<{ default: string }>('$lib/images/*.{jpg,jpeg,png}', { eager: true })
+		)
+			.map((m) => m.default)
+			.filter((p) => !p.split('/').at(-1)?.startsWith('_'));
+	}
+
+	function loadOverlayImages() {
+		return Object.values(
+			import.meta.glob<{ default: string }>('$lib/images/overlays/*.{jpg,jpeg,png}', {
+				eager: true
+			})
 		)
 			.map((m) => m.default)
 			.filter((p) => !p.split('/').at(-1)?.startsWith('_'));
@@ -75,8 +89,14 @@
 	{#if images.length === 0}
 		<p>No images found</p>
 	{:else}
-		{#key image}
-			<svelte:component this={Canvas} bind:this={canvas} bgUrl={image} />
+		{#key image + overlay}
+			<svelte:component
+				this={Canvas}
+				bind:this={canvas}
+				bgUrl={image}
+				overlayUrl={overlay}
+				{overlayColor}
+			/>
 		{/key}
 	{/if}
 
@@ -84,6 +104,25 @@
 		<select class="select select-bordered w-full max-w-xs" bind:value={image}>
 			{#each images as path}
 				<option value={path}>{humanizeString(path.split('/').at(-1)!.split('.').at(0)!)}</option>
+			{/each}
+		</select>
+	{/if}
+
+	{#if overlays.length > 1}
+		<select class="select select-bordered w-full max-w-xs" bind:value={overlay}>
+			{#each overlays as path}
+				<option value={path}>{humanizeString(path.split('/').at(-1)!.split('.').at(0)!)}</option>
+			{/each}
+		</select>
+	{/if}
+
+	{#if config.overlay && config.overlay.colors?.length > 0}
+		<select class="select select-bordered w-full max-w-xs" bind:value={overlayColor}>
+			{#if config.overlay.blankLabel}
+				<option>{config.overlay.blankLabel}</option>
+			{/if}
+			{#each config.overlay.colors as color}
+				<option value={color}>{color.name}</option>
 			{/each}
 		</select>
 	{/if}
