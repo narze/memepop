@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import Konva from 'konva';
+	import { onMount, tick } from 'svelte';
 	import { Stage, Layer, Image } from 'svelte-konva';
 
 	import EditableText from './EditableText.svelte';
-	import Konva from 'konva';
-	import { initialTextArray } from './config';
+	import { initialTextArray, type OverlayColor } from './config';
 
 	export let bgUrl = 'https://placehold.co/600x400/000000/FFF';
+	export let overlayUrl: string | undefined;
+	export let overlayColor: OverlayColor;
+	export let font: string | undefined;
+	export let textColor: string;
 
 	let textArray = initialTextArray;
 
@@ -32,7 +36,9 @@
 
 	let stage: Konva.Stage;
 	let image: HTMLImageElement;
+	let overlayImage: HTMLImageElement;
 	let container: HTMLDivElement;
+	let overlayImageEl: Konva.Image;
 
 	let width: number;
 	let height: number;
@@ -86,6 +92,16 @@
 		img.src = bgUrl;
 		img.onload = () => (image = img);
 
+		if (overlayUrl) {
+			const overlay = document.createElement('img');
+			overlay.src = overlayUrl;
+			overlay.onload = async () => {
+				overlayImage = overlay;
+				await tick();
+				overlayImageEl.cache();
+			};
+		}
+
 		window.addEventListener('resize', () => onResized());
 
 		return () => {
@@ -109,6 +125,20 @@
 		<Layer config={{ scaleX: imgScaleToFit, scaleY: imgScaleToFit }}>
 			<Image config={{ image }} />
 		</Layer>
+		<Layer config={{ scaleX: imgScaleToFit, scaleY: imgScaleToFit }}>
+			<Image
+				bind:handle={overlayImageEl}
+				config={{
+					image: overlayImage,
+					filters: [Konva.Filters.RGBA],
+					red: overlayColor?.red ?? 0,
+					green: overlayColor?.green ?? 0,
+					blue: overlayColor?.blue ?? 0,
+					alpha: overlayColor?.alpha ?? 0,
+					visible: overlayColor?.alpha > 0
+				}}
+			/>
+		</Layer>
 		<Layer config={{ scaleX: canvasScale, scaleY: canvasScale }}>
 			{#if ready}
 				{#each textArray as text}
@@ -116,9 +146,10 @@
 						bind:this={text.el}
 						text={text.text}
 						fontSize={text.fontSize}
+						{font}
 						xPercent={text.xPercent}
 						yPercent={text.yPercent}
-						color={text.color}
+						color={text.colorEditable ? textColor : text.color}
 						editable={text.editable}
 					/>
 				{/each}
