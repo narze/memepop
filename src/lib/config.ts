@@ -32,8 +32,8 @@ export const initialTextArray: Text[] = [
 	},
 	{
 		text: 'memepop.vercel.app',
-		xPercent: 85,
-		yPercent: 98.5,
+		xPercent: 83.5,
+		yPercent: 98,
 		fontSize: 32,
 		editable: false,
 		color: 'black',
